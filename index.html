@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Registration Form</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+		}
+		form {
+			width: 300px;
+			margin: 0 auto;
+		}
+		label {
+			display: block;
+			margin-top: 20px;
+		}
+		input[type="text"], input[type="password"], input[type="tel"] {
+			width: 100%;
+			padding: 10px;
+			margin-top: 5px;
+		}
+		button {
+			background-color: blue;
+			color: white;
+			padding: 10px;
+			border: none;
+			cursor: pointer;
+			margin-top: 20px;
+		}
+	</style>
+</head>
+<body>
+	<form id="registration-form">
+		<label for="username">Username:</label>
+		<input type="text" id="username" name="username" required>
+		<label for="password">Password:</label>
+		<input type="password" id="password" name="password" required>
+		<label for="phone">Phone Number:</label>
+		<input type="tel" id="phone" name="phone" required>
+		<button type="submit">Register</button>
+	</form>
+
+	<script>
+		document.getElementById("registration-form").addEventListener("submit", function(event) {
+			event.preventDefault();
+			var username = document.getElementById("username").value;
+			var password = document.getElementById("password").value;
+			var phone = document.getElementById("phone").value;
+			var formData = "username=" + username + "&password=" + password + "&phone=" + phone;
+			fetch("register.php", {
+				method: "POST",
+				body: formData
+			})
+			.then(function(response) {
+				return response.text();
+			})
+			.then(function(text) {
+				console.log(text);
+				alert("Registration successful!");
+			})
+			.catch(function(error) {
+				console.error(error);
+				alert("Error: Registration failed.");
+			});
+		});
+	</script>
+</body>
+</html>
